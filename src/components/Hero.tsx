@@ -1,45 +1,49 @@
 import React from 'react';
 import { SearchIcon } from 'lucide-react';
+import workerImage from '../assets/photo-1521791136064-7986c2920216.png';
 
 const Hero = () => {
   return (
     <div className="relative bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-          <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-            <div className="sm:text-center lg:text-left">
-              <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+      <div className="lg:grid lg:grid-cols-2 lg:items-center max-w-7xl mx-auto">
+        {/* Left Content */}
+        <div className="px-4 sm:px-6 md:px-8 lg:px-8 py-12 lg:py-24">
+          <main className="mx-auto max-w-2xl">
+            <div className="text-center lg:text-left">
+              <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
                 <span className="block">Find Trusted</span>
                 <span className="block text-blue-600">Local Professionals</span>
               </h1>
-              <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+              <p className="mt-4 text-base text-gray-500 sm:text-lg md:text-xl">
                 Connect with skilled workers in your area. From plumbers to electricians, find the right professional for your needs.
               </p>
-              <div className="mt-8 sm:flex sm:justify-center lg:justify-start">
-                <div className="relative rounded-md shadow-sm w-full max-w-lg">
-                  <input
-                    type="text"
-                    className="block w-full rounded-md border-gray-300 pl-10 pr-12 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                    placeholder="Search for services..."
-                  />
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <SearchIcon className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <button className="absolute inset-y-0 right-0 flex items-center px-4 text-white bg-blue-600 hover:bg-blue-700 rounded-r-md">
-                    Search
-                  </button>
+              <div className="mt-6">
+              <div className="relative rounded-md shadow-sm max-w-lg mx-auto lg:mx-0">
+                <input
+                  type="text"
+                  className="block w-full rounded-md border-gray-300 pl-12 pr-32 py-4 text-lg focus:border-blue-500 focus:ring-blue-500"
+                  placeholder="Search for services..."
+                />
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <SearchIcon className="h-6 w-6 text-gray-400" />
                 </div>
+                <button className="absolute inset-y-0 right-0 px-6 text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded-r-md text-lg">
+                  Search
+                </button>
+              </div>
               </div>
             </div>
           </main>
         </div>
-      </div>
-      <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-        <img
-          className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
-          src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
-          alt="Professional worker"
-        />
+
+        {/* Right Image */}
+        <div className="h-64 sm:h-80 md:h-96 lg:h-full w-full mt-6">
+          <img
+            className="w-full h-full object-cover"
+            src={workerImage}
+            alt="Professional worker"
+          />
+        </div>
       </div>
     </div>
   );
