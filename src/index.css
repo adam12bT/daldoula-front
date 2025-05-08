@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply antialiased text-gray-900;
+  }
+}
+
+@layer components {
+  .page-transition {
+    @apply transition-all duration-300 ease-in-out;
+  }
+}
