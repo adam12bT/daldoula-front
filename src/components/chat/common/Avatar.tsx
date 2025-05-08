@@ -9,7 +9,7 @@ interface AvatarProps {
 
 const Avatar: React.FC<AvatarProps> = ({ src, alt, size = 'md', online }) => {
   const sizeClasses = {
-    sm: 'w-8 h-8',
+    sm: 'w-6 h-6',   // slightly increased from w-4/h-4 for better visibility
     md: 'w-10 h-10',
     lg: 'w-12 h-12'
   };
