@@ -4,12 +4,19 @@ import { getAllProducts, getOneUser } from '../service/service';
 import { User } from '../entity/user';
 import { Product } from '../entity/product';
 import ProfessionalModal from '../components/proflemodel';
-
+import { useLocation } from 'react-router-dom';
 const Services = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProfessional, setSelectedProfessional] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('All Services');
+  const [searchQuery, setSearchQuery] = useState('');
+  const location = useLocation();
 
+useEffect(() => {
+  if (location.state?.selectedCategory) {
+    setSelectedCategory(location.state.selectedCategory);
+  }
+}, [location.state]);
   // Mapping of categories to relevant keywords
   const categoryKeywords = {
     'Plumbing': ['plumbing', 'plumber', 'leak', 'pipe'],
@@ -76,6 +83,21 @@ const Services = () => {
     fetchProducts();
   }, []);
 
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+
+    // Loop through categories and check if search matches any keyword
+    for (const category in categoryKeywords) {
+      const keywords = categoryKeywords[category];
+      if (keywords.some((keyword) => query.toLowerCase().includes(keyword))) {
+        setSelectedCategory(category);
+        return; // Stop once a category is found
+      }
+    }
+
+    setSelectedCategory('All Services'); // Default to 'All Services' if no match found
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between">
@@ -83,6 +105,8 @@ const Services = () => {
         <div className="mt-4 md:mt-0 relative">
           <input
             type="text"
+            value={searchQuery}
+            onChange={(e) => handleSearch(e.target.value)}
             placeholder="Search services..."
             className="w-full md:w-80 pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
           />
