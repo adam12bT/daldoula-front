@@ -19,30 +19,37 @@ const Navbar = () => {
 
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+
+
     setIsAuthenticated(!!token);
   }, [token]);
 
 
-  let userId = null;
 
 
 
+  const [userId, setUserId] = useState<string | null>(null);
 
-  if (token) {
-    try {
-      const decodedToken = jwtDecode<{ _id: string }>(token);
-      console.log(decodedToken)
-      userId = decodedToken.id; // Extract user ID
-      console.log(userId)
-    } catch (error) {
-      console.error("Invalid token:", error);
-      setError("Invalid token. Please log in again.");
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      console.log(token)
+      try {
+        const decodedToken = jwtDecode(token);
+        setUserId(decodedToken.id); 
+      } catch (error) {
+        console.error("Invalid token:", error);
+        setError("Invalid token. Please log in again.");
+      }
+    } else {
+      console.error("No token found");
+      setError("Authentication required. Please log in.");
     }
-  } else {
-    console.error("No token found");
-    setError("Authentication required. Please log in.");
-  }
+  }, [token]);
 
+console.log(userId)
   const fetchUserById = async () => {
     if (!userId || !token) {
       console.error("User ID or token missing");
@@ -64,15 +71,17 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    fetchUserById();
-
-  }, []);
+    if (userId && token) {
+      fetchUserById();
+    }
+  }, [userId, token]);
 
 
 
 
 
   useEffect(() => {
+
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node) &&
         buttonRef.current && !buttonRef.current.contains(event.target as Node)) {
@@ -84,7 +93,7 @@ const Navbar = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [token]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -117,7 +126,7 @@ const Navbar = () => {
                 Find Services
               </Link>
             )}
-            {isAuthenticated && (
+            {isAuthenticated &&  profile.role === 'job_poster' &&(
               <Link
                 to="/professionals"
                 className={`relative px-1 py-2 text-base font-medium transition-colors duration-200 ${

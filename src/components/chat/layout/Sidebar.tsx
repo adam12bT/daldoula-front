@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Search, Edit } from 'lucide-react';
+import { Search, Edit, CarIcon, ArrowRightLeft, ArrowLeft } from 'lucide-react';
 import Avatar from '../common/Avatar';
 import ConversationList from '../conversations/ConversationList';
 import { jwtDecode } from 'jwt-decode';
 import { User } from '../../../entity/user';
 import { getOneUser } from '../../../service/service';
+import { Link } from 'react-router-dom';
 
 const Sidebar: React.FC<{ onSelectUser: (user: User) => void }> = ({ onSelectUser }) => {
   const [senderId, setSenderId] = useState<string | null>(null);
@@ -52,7 +53,12 @@ const Sidebar: React.FC<{ onSelectUser: (user: User) => void }> = ({ onSelectUse
   return (
     <div className="w-full md:w-80 border-r border-gray-200 flex flex-col h-full">
       <div className="p-4 flex items-center justify-between border-b border-gray-200">
+
+
         <div className="flex items-center gap-2">
+          <Link to="/services" className="p-2 rounded-full hover:bg-gray-100 transition-colors">
+          <ArrowLeft className="text-indigo-500" size={30} />
+          </Link>
           <Avatar
             src={profile?.image}
             alt="User"
