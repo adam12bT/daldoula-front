@@ -36,6 +36,9 @@ const token =localStorage.getItem('token')
 
   return (
     <div className="py-2">
+
+
+      
 {chatPartners.map((user) => (
   <div key={user.id} onClick={() => onSelectUser(user.user)} className="cursor-pointer">
     <ConversationItem conversation={user.user} />

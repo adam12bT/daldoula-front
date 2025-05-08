@@ -95,7 +95,7 @@ const Navbar = () => {
 {isAuthenticated && (
               <Link
                 to="/chat"
-                className={`relative px-1 py-2 text-base font-medium transition-colors duration-200 ${isActive('/profile') ? 'text-blue-600' : 'text-gray-600 hover:text-blue-600'
+                className={`relative px-1 py-2 text-base font-medium transition-colors duration-200 ${isActive('/chat') ? 'text-blue-600' : 'text-gray-600 hover:text-blue-600'
                   } before:content-[''] before:absolute before:bottom-0 before:left-0 before:w-full before:h-0.5 before:bg-blue-600 before:scale-x-0 hover:before:scale-x-100 before:transition-transform before:duration-300`}
               >
                 Chat

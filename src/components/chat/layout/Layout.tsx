@@ -9,33 +9,34 @@ const Layout: React.FC = () => {
   const initialId = location.state?.id || null;
   const [selectedReceiver, setSelectedReceiver] = useState<string | null>(initialId);
 
-  // Update state when location changes (e.g., navigation with state)
   useEffect(() => {
     if (location.state?.id) {
       setSelectedReceiver(location.state.id);
     }
   }, [location]);
 
-  // Log whenever selectedReceiver changes
-  useEffect(() => {
-    if (selectedReceiver) {
-      console.log("Receiver changed to:", selectedReceiver);
-    }
-  }, [selectedReceiver]);
-  console.log("Receiver changed to:", selectedReceiver);
-
   return (
-    <div className="flex  bg-gray-50 text-gray-900 overflow-hidden">
+    <div className="flex h-screen bg-gray-50 text-gray-900 overflow-hidden">
+      {/* Sidebar - 1/4 of screen */}
+      <div className="flex-[1] max-w-xs border-r border-gray-200">
+        <Sidebar
+          onSelectUser={(user: User) => {
+            console.log("Selected user ID:", user._id);
+            setSelectedReceiver(user._id);
+          }}
+        />
+      </div>
 
-      <Sidebar
-      
-      onSelectUser={(user: User) => {
-        console.log("plsssssssssssss"+user._id)
-        setSelectedReceiver(user._id);
-      }} />
-
-      {/* ChatArea receives the selected receiver ID */}
-      <ChatArea id={selectedReceiver} />
+      {/* ChatArea - Remaining space */}
+      <div className="flex-[3] flex flex-col overflow-hidden">
+        {selectedReceiver ? (
+          <ChatArea id={selectedReceiver} />
+        ) : (
+          <div className="flex-1 flex items-center justify-center text-gray-400">
+            Select a user to start chatting.
+          </div>
+        )}
+      </div>
     </div>
   );
 };
