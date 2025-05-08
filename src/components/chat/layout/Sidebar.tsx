@@ -54,7 +54,7 @@ const Sidebar: React.FC<{ onSelectUser: (user: User) => void }> = ({ onSelectUse
       <div className="p-4 flex items-center justify-between border-b border-gray-200">
         <div className="flex items-center gap-2">
           <Avatar
-            src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg"
+            src={profile?.image}
             alt="User"
             online={true}
           />

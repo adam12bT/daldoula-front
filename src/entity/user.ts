@@ -12,5 +12,6 @@ export interface User {
     updatedAt: string;
     location: string;
     bio: string;
+    image?: string; 
 }
-export type RegisterUser = Omit<User, "password" | "skills" | "rating" | "reviews" | "createdAt" | "updatedAt" | "bio">;
+export type RegisterUser = Omit<User, "password" | "skills" | "rating" | "reviews" | "createdAt" | "updatedAt" | "bio" | "image"> 

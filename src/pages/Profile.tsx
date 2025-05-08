@@ -77,22 +77,59 @@ const Profile = () => {
     return <p style={{ color: "red" }}>{error}</p>;
   }
 
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+  
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "daldoula"); // replace this
+    formData.append("cloud_name", "dzo9rz7km"); // replace this
+  
+    try {
+      const res = await fetch("https://api.cloudinary.com/v1_1/dzo9rz7km/image/upload", {
+        method: "POST",
+        body: formData,
+      });
+  
+      const data = await res.json();
+      console.log("Uploaded Image URL:", data.secure_url);
+  
+      setProfile({ ...profile, image: data.secure_url }); // set image URL in profile
+    } catch (err) {
+      console.error("Cloudinary upload failed", err);
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="bg-white rounded-lg shadow-sm">
         <div className="relative h-48 rounded-t-lg bg-gradient-to-r from-blue-500 to-blue-600">
           <div className="absolute -bottom-16 left-8">
             <div className="relative">
+
+
               <img
-                src={'https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&q=70&fm=webp'}
+                src={profile.image || "https://via.placeholder.com/150"}
                 alt={profile.name}
                 className="w-32 h-32 rounded-full border-4 border-white"
-              />
-              {isEditing && (
-                <button className="absolute bottom-0 right-0 p-2 bg-blue-600 rounded-full text-white hover:bg-blue-700">
-                  <Camera className="h-5 w-5" />
-                </button>
-              )}
+              />*
+
+
+                      {isEditing && (
+  <div className="absolute bottom-0 right-0">
+    <input
+      type="file"
+      accept="image/*"
+      onChange={handleImageChange}
+      className="absolute inset-0 opacity-0 cursor-pointer"
+    />
+    <button className="p-2 bg-blue-600 rounded-full text-white hover:bg-blue-700">
+      <Camera className="h-5 w-5" />
+    </button>
+  </div>
+    )}
             </div>
           </div>
           {!isEditing ? (
