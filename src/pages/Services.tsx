@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { Search, Filter } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { getAllProducts, getOneUser } from '../service/service';
 import { User } from '../entity/user';
 import { Product } from '../entity/product';
 import ProfessionalModal from '../components/proflemodel';
 
-
 const Services = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProfessional, setSelectedProfessional] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('All Services');
 
+  // Mapping of categories to relevant keywords
+  const categoryKeywords = {
+    'Plumbing': ['plumbing', 'plumber', 'leak', 'pipe'],
+    'Electrical': ['electrical', 'electrician', 'wiring', 'circuit'],
+    'Carpentry': ['carpentry', 'carpenter', 'woodwork', 'furniture'],
+    'Gardening': ['gardening', 'gardener', 'lawn', 'plants'],
+    'Cleaning': ['cleaning', 'cleaner', 'janitor', 'maid'],
+    'Development': ['developer', 'development', 'programming', 'coding'],
+    'Car Pooling': ['carpool', 'ride', 'driver', 'transport'],
+  };
 
   // Fetch a user and attach it to the respective product
-  const fetchUser = async (userId) => {
+  const fetchUser = async (userId: string) => {
     if (!userId) return null;
 
     try {
@@ -32,17 +42,17 @@ const Services = () => {
     'Plumbing',
     'Electrical',
     'Carpentry',
-    'Painting',
+    'Gardening',
     'Cleaning',
-    'Landscaping',
-    'Auto Repair',
-    'car pooling'
+    'Development',
+    'Car Pooling'
   ];
+
   // Fetch all products and attach users
   const fetchProducts = async () => {
     try {
       const response = await getAllProducts();
-      console.log("Fetched Products:", response);
+      console.log('Fetched Products:', response);
 
       if (response && Array.isArray(response)) {
         // Fetch users for each product
@@ -65,7 +75,7 @@ const Services = () => {
   useEffect(() => {
     fetchProducts();
   }, []);
-  console.log(products)
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between">
@@ -84,10 +94,12 @@ const Services = () => {
         {categories.map((category, index) => (
           <button
             key={index}
-            className={`px-4 py-2 rounded-full text-sm font-medium ${index === 0
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
+            onClick={() => setSelectedCategory(category)}
+            className={`px-4 py-2 rounded-full text-sm font-medium ${
+              selectedCategory === category
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            }`}
           >
             {category}
           </button>
@@ -95,37 +107,41 @@ const Services = () => {
       </div>
 
       <div className="mt-8 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {products.map((service) => (
-          <div
-            key={service.id}
-            className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
-          >
+        {products
+          .filter((service) => {
+            if (selectedCategory === 'All Services') return true;
 
-            <div className="p-6">
-              <h3 className="text-xl font-semibold text-gray-900">
-                {service.title}
-              </h3>
-              <p className="mt-2 text-gray-600">by {service.user.name}</p>
-              <div className="mt-4 flex items-center">
-                <span className="text-yellow-400">★</span>
-                <span className="ml-1 text-gray-700">{service.user.rating}</span>
-                <span className="ml-1 text-gray-500">
-                  ({service.user.reviews.length} reviews)
-                </span>
-              </div>
-              <p className="mt-2 text-gray-700 font-medium">{service.price}</p>
-              <div className="mt-6">
-                <button
-                  onClick={() => setSelectedProfessional(service.user)}
-                  className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  Book Now
-                </button>
+            const title = service.title?.toLowerCase() || '';
+            const keywords = categoryKeywords[selectedCategory] || [];
+            return keywords.some((keyword) => title.includes(keyword));
+          })
+          .map((service) => (
+            <div
+              key={service.id}
+              className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
+            >
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-gray-900">{service.title}</h3>
+                <p className="mt-2 text-gray-600">by {service.user.name}</p>
+                <div className="mt-4 flex items-center">
+                  <span className="text-yellow-400">★</span>
+                  <span className="ml-1 text-gray-700">{service.user.rating}</span>
+                  <span className="ml-1 text-gray-500">({service.user.reviews.length} reviews)</span>
+                </div>
+                <p className="mt-2 text-gray-700 font-medium">{service.price}</p>
+                <div className="mt-6">
+                  <button
+                    onClick={() => setSelectedProfessional(service.user)}
+                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Book Now
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
+
       <ProfessionalModal
         isOpen={!!selectedProfessional}
         profile={selectedProfessional}
