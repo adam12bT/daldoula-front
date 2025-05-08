@@ -53,100 +53,119 @@ const Professionals = () => {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <form
-        onSubmit={handleSubmit}
-        className="bg-white rounded-lg shadow-sm p-6 space-y-6"
-      >
-        <h2 className="text-2xl font-bold text-gray-900">Create a Post</h2>
+  onSubmit={handleSubmit}
+  className="bg-white rounded-xl shadow-md p-8 space-y-6 border border-gray-100"
+>
+  <h2 className="text-3xl font-extrabold text-gray-900">Create a Post</h2>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Title</label>
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            required
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-          />
-        </div>
+  {/* Title */}
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+    <input
+      type="text"
+      name="title"
+      value={formData.title}
+      onChange={handleChange}
+      required
+      className="w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base"
+      placeholder="e.g. Need a plumber for kitchen sink"
+    />
+  </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Description</label>
-          <textarea
-            name="description"
-            rows={4}
-            value={formData.description}
-            onChange={handleChange}
-            required
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-          ></textarea>
-        </div>
+  {/* Description */}
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+    <textarea
+      name="description"
+      rows={5}
+      value={formData.description}
+      onChange={handleChange}
+      required
+      className="w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base"
+      placeholder="Provide a clear description of the task"
+    ></textarea>
+  </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Category</label>
-          <input
-            type="text"
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            required
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-          />
-        </div>
+  {/* Category */}
+  <div>
+  <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+  <select
+    name="category"
+    value={formData.category}
+    onChange={handleChange}
+    required
+    className="w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base"
+  >
+    <option value="">Select a category</option>
+    <option value="Electrical">Electrical</option>
+    <option value="Plumbing">Plumbing</option>
+    <option value="Cleaning">Cleaning</option>
+    <option value="Carpentry">Carpentry</option>
+    <option value="Gardening">Gardening</option>
+    <option value="Car Pooling">Car Pooling</option>
+    <option value="Development">Development</option>
+  </select>
+</div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Budget ($)</label>
-          <input
-            type="number"
-            name="budget"
-            value={formData.budget}
-            onChange={handleChange}
-            required
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-          />
-        </div>
+  {/* Budget */}
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">Budget ($)</label>
+    <input
+      type="number"
+      name="budget"
+      value={formData.budget}
+      onChange={handleChange}
+      required
+      className="w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base"
+      placeholder="e.g. 100"
+    />
+  </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Deadline</label>
-          <input
-            type="date"
-            name="deadline"
-            value={formData.deadline}
-            onChange={handleChange}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-          />
-        </div>
+  {/* Deadline */}
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">Deadline</label>
+    <input
+      type="date"
+      name="deadline"
+      value={formData.deadline}
+      onChange={handleChange}
+      className="w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base"
+    />
+  </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Status</label>
-          <select
-            name="status"
-            value={formData.status}
-            onChange={handleChange}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-          >
-            <option value="open">Open</option>
-            <option value="in progress">In Progress</option>
-            <option value="completed">Completed</option>
-            <option value="closed">Closed</option>
-          </select>
-        </div>
+  {/* Status */}
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+    <select
+      name="status"
+      value={formData.status}
+      onChange={handleChange}
+      className="w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base"
+    >
+      <option value="open">Open</option>
+      <option value="in progress">In Progress</option>
+      <option value="completed">Completed</option>
+      <option value="closed">Closed</option>
+    </select>
+  </div>
 
-        <div className="pt-4 flex justify-end space-x-4">
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
-          >
-            Submit
-          </button>
-          <button
-            type="reset"
-            className="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-100"
-          >
-            Reset
-          </button>
-        </div>
-      </form>
+  {/* Buttons */}
+  <div className="pt-6 flex justify-end space-x-4">
+    <button
+      type="submit"
+      className="bg-blue-600 text-white px-6 py-3 rounded-md text-base font-medium hover:bg-blue-700 transition"
+    >
+      Submit
+    </button>
+    <button
+      type="reset"
+      className="border border-gray-300 text-gray-700 px-6 py-3 rounded-md text-base font-medium hover:bg-gray-100 transition"
+    >
+      Reset
+    </button>
+  </div>
+</form>
+
     </div>
   );
 };
