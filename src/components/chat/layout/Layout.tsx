@@ -14,6 +14,7 @@ const Layout: React.FC = () => {
       setSelectedReceiver(location.state.id);
     }
   }, [location]);
+  console.log("Selected user ID:", selectedReceiver)
 
   return (
     <div className="flex h-screen bg-gray-50 text-gray-900 overflow-hidden">
@@ -30,6 +31,7 @@ const Layout: React.FC = () => {
       {/* ChatArea - Remaining space */}
       <div className="flex-[3] flex flex-col overflow-hidden">
         {selectedReceiver ? (
+          
           <ChatArea id={selectedReceiver} />
         ) : (
           <div className="flex-1 flex items-center justify-center text-gray-400">

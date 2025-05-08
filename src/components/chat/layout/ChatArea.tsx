@@ -19,6 +19,7 @@ const ChatArea: React.FC<ChatAreaProps> = ({ id }) => {
   const [receiver, setReceiver] = useState<User | null>(null);
   const [messages, setMessages] = useState<any[]>([]);
   const token = localStorage.getItem('token');
+  console.log(id)
 
   useEffect(() => {
     if (token) {
